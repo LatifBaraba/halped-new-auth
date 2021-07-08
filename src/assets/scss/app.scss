@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import "bootstrap/scss/functions"; 
+@import "bootstrap/scss/variables";
+
+$theme-colors: (
+    success: #00C853,
+    primary: #0A97DE
+);
+
+@import "bootstrap";
+
+body {
+    background: #f5f5f5;
+}
+.login {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0 , 0.15);
+    border-radius: 8px;
+    background: #fff;
+    .form-login {
+        .halped-form {
+            height: 90%;
+        }
+        .halped-logo {
+            height: 5%;
+            img {
+                max-width: 120px;
+            }
+        }
+        .login-welcome {
+            align-self: center;
+            h3 {
+                margin: 0;
+                font-weight: 700;
+            }
+            span {
+                color: #808080;
+                font-size: .85rem;
+                font-weight: 400;
+            }
+        }
+        .login-field {
+            height: 100%;
+        }
+    }
+    .form-label {
+        font-size: .8rem;
+        font-weight: 600;
+    }
+    .col-image {
+        height: 100%;
+        img {
+            border-radius: 8px;
+            width: 100%;
+            max-height: 90vh;
+        }
+    }
+    .form-control {
+        border-radius: 8px;
+        background: #ededed;
+        border: none;
+        font-size: .8rem;
+        line-height: 2;
+        &:focus{
+            border: 1px solid $primary;
+            background: #fcfcfc;
+            box-shadow: none;
+        }
+    }
+    .login-extras {
+        color: #808080;
+        font-size: .85rem;
+        font-weight: 500;
+        .form-check {
+            .form-check-input {
+                &:checked {
+                    background-color: $primary;
+                    border-color: $primary;
+                }
+            }
+            label {
+                cursor: pointer;
+                font-size: .8rem !important;
+            }
+        }
+        a {
+            text-decoration: none;
+            color: #808080;
+            font-size: .8rem;
+            &:hover {
+                color: $success;
+                transition: .3s;
+                font-size: .85rem;
+            }
+        }
+    }
+    
+    .btn {
+        padding: 0.2rem 1rem;
+        font-size: .85rem;
+        font-weight: 600;
+        border-radius: 8px;
+    }
+
+    .btn-success {
+        color: white;
+    }
+     
+    span {
+        font-size: .7rem;
+        font-weight: 500;
+
+    }
+
+    .input-group {
+        .btn {
+            background: #ededed;
+            border: none;
+        }
+    }
+
+    .pt-halped {
+        align-self: center;
+        color: #808080;
+    }
+}
