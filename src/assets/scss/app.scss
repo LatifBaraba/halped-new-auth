@@ -2,17 +2,34 @@
 
 @import "bootstrap/scss/functions"; 
 @import "bootstrap/scss/variables";
+@import "bootstrap";
 
 $theme-colors: (
     success: #00C853,
     primary: #0A97DE
 );
 
-@import "bootstrap";
-
 body {
     background: #f5f5f5;
 }
+
+.halped-alert {
+    // position: absolute;
+    // bottom: 20px;
+    // right: 20px;
+}
+
+.toastsss {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    max-height: 100%;
+    overflow: hidden auto;
+    z-index: 999;
+}
+
 .login {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0 , 0.15);
     border-radius: 8px;

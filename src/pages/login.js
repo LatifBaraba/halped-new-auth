@@ -3,15 +3,21 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import bootToast from '../helper/index'
 
 const Login = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
 
-    const [ show, setShow] = useState();
+    const [ toast, setToast ] = useState(0)
+    const [ show, setShow] = useState()
+    
+    const onSubmit = data => {
+        console.log(data)
+        setToast(bootToast())
+    }
 
-    function peekPass() {
+    const peekPass = () => {
         const passInp = document.getElementById("peek");
         if (passInp.type === "password") {
             passInp.type = "text";
@@ -32,6 +38,9 @@ const Login = () => {
 
     return (
         <div className="container" style={{padding:"20px"}}>
+            <div className="toastsss">
+                {toast}
+            </div>
             <div className="row login h-100 m-auto">
                 <div className="col-md-6 col-sm-12 col-image p-0">
                     {/* <img src="https://st.depositphotos.com/1054144/4016/v/600/depositphotos_40160207-stock-illustration-natural-green-background.jpg" alt=""/> */}
@@ -65,7 +74,7 @@ const Login = () => {
                                                 <input type="password" className="form-control" placeholder="Password" id="peek" aria-describedby="button-pass" {...register("password", { required: true, minLength: 6 })}/>
                                                 <button className="btn" type="button" id="button-pass" onClick={peekPass}>
                                                     {/* <FontAwesomeIcon icon={faEye} /> */}
-                                                    {faPeek(0)}
+                                                    {faPeek()}
                                                 </button>
                                             </div>
                                             <span className="text-danger">{errors.password && "Silahkan isi password & Minimum 6 karakter"}</span>
