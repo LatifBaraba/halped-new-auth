@@ -7,9 +7,20 @@ const bootToast = () => {
         document.querySelector(".halped-alert").remove();
     }
     
-    return (<div className="alert alert-primary halped-alert" role="alert">
-            A simple primary alert—check it out!
-        </div>)
+    const alert = () => {
+        // const t = document.querySelector(".toastsss")
+        // console.log(t)
+        // t.innerHTML += `<div className="alert alert-primary halped-alert" role="alert">
+        //             A simple primary alert—check it out!
+        //             </div>`
+        return (<div className="alert alert-primary halped-alert" role="alert">
+                A simple primary alert—check it out!
+                </div>)    
+    }
+    
+    return (
+        <div className="toastsss">{alert()}</div>
+    )
 
     // return (
     //         <div className="alert alert-warning alert-dismissible fade show halped-alert" role="alert">
