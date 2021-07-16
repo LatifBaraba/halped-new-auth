@@ -1,13 +1,67 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchValidate } from '../redux/verification/action'
+import { fetchRegister } from '../redux/register/action'
 
 const Verification = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const dispatch = useDispatch()
+    const { register, handleSubmit, formState: { errors } } = useForm()
+
+    const loadingStatus = useSelector((state) => state.validateReducer.loading)
     
+    const [pin, setPin] = useState()
+    const [counter, setCounter] = useState(30)
+
+    const verifyToken = localStorage.getItem('verifyToken')
+    const identity = localStorage.getItem('identity')
+    // console.log(verifyToken, 'v token')
+
+    useEffect(() => {
+        countDown()
+    }, [counter])
+
     const onSubmit = data => {
-        console.log(data)
+        const payload = {
+            pin: pin,
+            verifyToken: verifyToken
+        }   
+        dispatch(fetchValidate(payload));
+    }
+
+    const handleResend = () => {
+        const payload = {
+            identity: identity,
+        }   
+        dispatch(fetchRegister(payload))
+    }
+
+    const LoadingButton = () => {
+        if(loadingStatus === false) {
+            return (
+                <input type="submit" className="btn btn-primary" id="login-btn" value="Submit" />
+            )
+          } else {
+            return (
+                <button className="btn btn-primary" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span className="visually-hidden">Loading...</span>
+                </button>
+            )
+        }
+    }
+
+    const resendButton = () => {
+        if (counter === 0) {
+            return <button className="btn btn-outline-secondary" onClick={handleResend}>Kirim Ulang</button>
+        } else {
+            return <button className="btn btn-outline-secondary" onClick={handleResend} disabled>Kirim Ulang</button>
+        }
+    }
+
+    const countDown = () => {
+        counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
     }
 
     return (
@@ -24,25 +78,26 @@ const Verification = () => {
                             <div className="row login-field justify-content-center">
                                 <div className="col-md-8 login-welcome mt-2">
                                     <h3>Verifikasi</h3>
-                                    <span>masukan kode verifikasi</span>
+                                    <span>Kode verifikasi telah dikirimkan ke email anda !</span><br/>
+                                    <span>Silahkan cek dan masukan pada kolom dibawah ini.</span>
                                 </div>
                                 <div className="col-md-8 col-sm-12">
                                     <form onSubmit={handleSubmit(onSubmit)}>
                                         <div className="col-12">
                                             <label className="form-label">6 angka PIN</label>
-                                            <input type="text" className="form-control" placeholder="xxxx" {...register("pin", { required: true })} autoFocus/>
+                                            <input type="number" className="form-control" placeholder="123456" {...register("pin", { required: true })} onChange={e => setPin(e.target.value)} autoFocus/>
                                             <span className="text-danger">{errors.pin && "Silahkan isi PIN verifikasi"}</span>
                                         </div>
                                         <div className="col-12">
                                             <div className="row mt-3">
                                                 <div className="col d-grid gap-2">
-                                                    <input type="submit" className="btn btn-primary" id="login-btn" value="Submit" />
+                                                    {LoadingButton()}
                                                 </div>
                                             </div>
                                             <div className="row mt-3">
                                                 <div className="col d-grid gap-2">
-                                                    <span className="text-secondary">Atau</span>
-                                                    <button className="btn btn-outline-secondary">Kirim Ulang</button>
+                                                    <span className="text-secondary">Atau tunggu {counter} detik untuk</span>
+                                                    {resendButton()}
                                                 </div>
                                             </div>
                                         </div>

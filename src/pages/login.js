@@ -3,15 +3,25 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { fetchLogin } from '../redux/login/action'
+import { useDispatch, useSelector } from "react-redux"
 
 const Login = () => {
 
+    const dispatch = useDispatch();
     const { register, handleSubmit, formState: { errors } } = useForm();
+    
+    const loadingStatus = useSelector((state) => state.loginReducer.loading);
 
     const [ show, setShow] = useState()
     
     const onSubmit = data => {
         console.log(data)
+        const payload = {
+            identity: data.name,
+            password: data.password
+        }
+        dispatch(fetchLogin(payload));
     }
 
     const peekPass = () => {
@@ -30,6 +40,21 @@ const Login = () => {
             return (<FontAwesomeIcon icon={faEye} />)
         } else {
             return (<FontAwesomeIcon icon={faEyeSlash} />)
+        }
+    }
+
+    const LoadingButton = () => {
+        if(loadingStatus === false) {
+            return (
+                <input type="submit" className="btn btn-success" id="login-btn" value="Masuk"></input>
+            )
+          } else {
+            return (
+                <button className="btn btn-success" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span className="visually-hidden">Loading...</span>
+                </button>
+            )
         }
     }
 
@@ -62,7 +87,7 @@ const Login = () => {
                                             <div className="input-group">
                                                 <input type="password" className="form-control" placeholder="Password" id="peek" aria-describedby="button-pass" {...register("password", { required: true, minLength: 6 })}/>
                                                 <button className="btn" type="button" id="button-pass" onClick={peekPass}>
-                                                    {faPeek}
+                                                    {faPeek(0)}
                                                 </button>
                                             </div>
                                             <span className="text-danger">{errors.password && "Silahkan isi password & Minimum 6 karakter"}</span>
@@ -85,11 +110,12 @@ const Login = () => {
                                         </div>
                                         <div className="col-12">
                                             <div className="row mt-3">
-                                                <div className="col d-grid gap-2">
-                                                    <input type="submit" className="btn btn-success" id="login-btn" value="Masuk" />
+                                                <div className="col d-grid">
+                                                    {LoadingButton()}
                                                 </div>
-                                                <div className="col d-grid gap-2">
-                                                    <button className="btn btn-outline-primary">Daftar Sekarang</button>
+                                                <div className="col d-grid">
+                                                    <Link to="/auth-register" className="btn btn-outline-primary">Daftar Sekarang</Link>
+                                                    {/* <button className="btn btn-outline-primary">Daftar Sekarang</button> */}
                                                 </div>
                                             </div>
                                         </div>

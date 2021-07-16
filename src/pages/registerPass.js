@@ -1,12 +1,20 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchRegisterPassword } from '../redux/registerPass/action'
 
 const RegisterPass = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const dispatch = useDispatch()
+    const { register, handleSubmit, formState: { errors } } = useForm()
+
+    const loadingStatus = useSelector((state) => state.registerPasswordReducer.loading)
+    
+    const registerToken = localStorage.getItem('registerToken')
+    const identity = localStorage.getItem('identity')
+    console.log(registerToken, 'reg token')
 
     const [ show, setShow] = useState()
     const [ show2, setShow2] = useState()
@@ -17,9 +25,10 @@ const RegisterPass = () => {
         if (data.password === data.cpassword) {
             console.log(data)
             const payload = {
-                pass,
-                cpass
+               registerToken: registerToken,
+               password: data.password
             }
+            dispatch(fetchRegisterPassword(payload));
         } else {
             alert('password tidak sama')
         }
@@ -53,6 +62,21 @@ const RegisterPass = () => {
         }
     }
 
+    const LoadingButton = () => {
+        if(loadingStatus === false) {
+            return (
+                <input type="submit" className="btn btn-success" id="login-btn" value="Submit" />
+            )
+          } else {
+            return (
+                <button className="btn btn-success" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span className="visually-hidden">Loading...</span>
+                </button>
+            )
+        }
+    }
+
     return (
         <div className="container" style={{padding:"20px"}}>
             <div className="row login h-100 m-auto">
@@ -73,7 +97,7 @@ const RegisterPass = () => {
                                     <form onSubmit={handleSubmit(onSubmit)}>
                                         <div className="col-12">
                                             <label className="form-label">Identitas</label>
-                                            <input type="text" className="form-control" value="latifbaraba88@gmail.com" {...register("identity")} disabled/>
+                                            <input type="text" className="form-control" value={identity} {...register("identity")} disabled/>
                                             <span className="text-danger">{errors.identity && "error"}</span>
                                         </div>
                                         <div className="col-12">
@@ -101,7 +125,7 @@ const RegisterPass = () => {
                                         <div className="col-12">
                                             <div className="row mt-3">
                                                 <div className="col d-grid gap-2">
-                                                    <input type="submit" className="btn btn-success" id="login-btn" value="Submit" />
+                                                    {LoadingButton()}
                                                 </div>
                                             </div>
                                         </div>
