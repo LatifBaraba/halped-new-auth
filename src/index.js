@@ -12,6 +12,9 @@ import Login from './pages/login'
 import Register from './pages/register'
 import Verification from './pages/verification'
 import RegisterPass from './pages/registerPass'
+import ForgotPass from './pages/forgotPassword/forgotPass'
+import VerificationPass from './pages/forgotPassword/verificationPass'
+import NewPass from './pages/forgotPassword/newPass'
 
 const store = createStore(reducers, applyMiddleware(thunk))
 
@@ -26,9 +29,9 @@ ReactDOM.render(
         <Route path="/auth-register" exact component={Register}/>
         <Route path="/auth-verification" exact component={Verification}/>
         <Route path="/auth-register-password" exact component={RegisterPass}/>
-        {/* <Route path="/auth-forgot-password" exact component={RegisterPass}/>
-        <Route path="/auth-verification-password" exact component={RegisterPass}/>
-        <Route path="/auth-reset-password" exact component={RegisterPass}/> */}
+        <Route path="/auth-forgot-password" exact component={ForgotPass}/>
+        <Route path="/auth-verification-password" exact component={VerificationPass}/>
+        <Route path="/auth-reset-password" exact component={NewPass}/>
       </Switch>
     </Router> 
   </Provider>,   
