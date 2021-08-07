@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchNewPassword } from '../../redux/newPass/action'
+import { ToastContainer } from 'react-toastify'
+import toastFunction from '../../helper/toast_helper'
 
 const NewPass = () => {
 
@@ -30,7 +32,7 @@ const NewPass = () => {
             }
             dispatch(fetchNewPassword(payload));
         } else {
-            alert('password tidak sama')
+            toastFunction('warning', 'password tidak sesuai', 'top-left')
         }
     }
 
@@ -78,6 +80,7 @@ const NewPass = () => {
 
     return (
         <div className="container" style={{padding:"20px"}}>
+            <ToastContainer />
             <div className="row login h-100 m-auto">
                 <div className="col-md-6 col-sm-12 col-image p-0">
                     <img src="https://i.pinimg.com/originals/49/f5/35/49f5359e9fdd391a66237bf89253d742.jpg" alt="" />

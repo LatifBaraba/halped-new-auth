@@ -5,8 +5,10 @@ import {
 } from '../actionTypes'
 import axios from 'axios'
 import history from '../../history'
+import toastFunction from '../../helper/toast_helper'
 
-const URL = `${process.env.REACT_APP_BASE_URL}/api/auth/password/reset`;
+// const URL = `${process.env.REACT_APP_BASE_URL}/api/auth/password/reset`;
+const URL = `${process.env.REACT_APP_BASE_URL_DEV}/api/auth/password/reset`;
 
 export const fetchValidatePass = payload => {
     return (dispatch) => {
@@ -23,10 +25,14 @@ export const fetchValidatePass = payload => {
             localStorage.removeItem('verifyToken', payload.verify_token)
             localStorage.setItem('resetPasswordToken', res.data.data.reset_password_token)
             console.log(res, "validatePass success res")
-            history.push("/auth-reset-password")
+            toastFunction('success', res.data.message, 'bottom-center')
+            setTimeout(() => {
+                history.push("/auth-reset-password")
+            }, 3000);
         })
         .catch(err => {
             dispatch(validatePassFailure(err))
+            toastFunction('warning', err.response.data.error.message, 'bottom-center')
             console.log(err, "validatePass success err")
         })
     }

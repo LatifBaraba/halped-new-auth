@@ -5,6 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { fetchLogin } from '../redux/login/action'
 import { useDispatch, useSelector } from "react-redux"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import toastFunction from '../helper/toast_helper'
 
 const Login = () => {
 
@@ -17,6 +21,8 @@ const Login = () => {
     
     const onSubmit = data => {
         console.log(data)
+        // toast.success("Wow so easy !")
+        // toastFunction('success', 'aduuhhhh', 'top-left')
         const payload = {
             identity: data.name,
             password: data.password
@@ -60,6 +66,7 @@ const Login = () => {
 
     return (
         <div className="container" style={{padding:"20px"}}>
+            <ToastContainer />
             <div className="row login h-100 m-auto">
                 <div className="col-md-6 col-sm-12 col-image p-0">
                     {/* <img src="https://st.depositphotos.com/1054144/4016/v/600/depositphotos_40160207-stock-illustration-natural-green-background.jpg" alt=""/> */}
@@ -103,7 +110,7 @@ const Login = () => {
                                                     </div>
                                                 </div>
                                                 <div className="col text-end">
-                                                    <Link to="/auth-forgot-password">Lupa Kata Sandi ?</Link>
+                                                    <Link to="/auth-forgot-password">Lupa Password ?</Link>
                                                 </div>
                                             </div>
                                             

@@ -6,7 +6,8 @@ import {
 import axios from 'axios'
 import history from '../../history'
 
-const URL = `${process.env.REACT_APP_BASE_URL}/api/auth/register`;
+// const URL = `${process.env.REACT_APP_BASE_URL}/api/auth/register`;
+const URL = `${process.env.REACT_APP_BASE_URL_DEV}/api/auth/register`;
 
 export const fetchRegister = (payload) => {
     return (dispatch) => {

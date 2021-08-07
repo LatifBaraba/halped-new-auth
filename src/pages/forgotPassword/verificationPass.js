@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import {fetchValidatePass} from '../../redux/verificationPass/action'
+import { fetchValidatePass } from '../../redux/verificationPass/action'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const VerificationPass = () => {
 
@@ -52,6 +54,7 @@ const VerificationPass = () => {
 
     return (
         <div className="container" style={{padding:"20px"}}>
+            <ToastContainer />
             <div className="row login h-100 m-auto">
                 <div className="col-md-6 col-sm-12 col-image p-0">
                     <img src="https://i.pinimg.com/originals/49/f5/35/49f5359e9fdd391a66237bf89253d742.jpg" alt="" />
